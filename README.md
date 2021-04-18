@@ -8,6 +8,20 @@ This compenent could be used with [storyblok opening hours](https://www.notion.s
 
 See [docs](https://github.com/) for more information.
 
+## Setup CI environent variables
+
+1. Login to your npm account
+   ```sh
+   npm login
+   ```
+2. Create and copy npm auth token
+   ```sh
+   npm token create
+   ```
+3. Go to GitHub repo: Settings > Secrets > New repository secret:
+   - name: `NPM_AUTH_TOKEN`
+   - value: token
+
 ## License
 
 [MIT Licensed](license) by [Macherjek](https://www.macherjek.at/)
