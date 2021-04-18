@@ -22,7 +22,8 @@
     "dev": "vuepress dev docs --open",
     "test": "jest src/*",
     "watch:test": "npm test -- --watch",
-    "lint": "eslint 'src/**/*.{js,vue}'"
+    "lint": "eslint 'src/**/*.{js,vue}'",
+    "release": "npm run lint && npm run test && npm run predev && npm run prebuild && standard-version && git push --follow-tags && npm publish"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -51,6 +52,7 @@
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-vue": "^5.1.6",
+    "standard-version": "^9.2.0",
     "vue": "^2.6.11",
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11",

@@ -165,7 +165,7 @@ export default {
       // Map day names with defined locale
       let days = this.days.map((day, index) => {
         const name = this.getDayName(index) || day.name
-        const times = day.times
+        const { times } = day
         const hasTimes = times && times.length > 0
 
         return {

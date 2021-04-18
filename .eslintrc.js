@@ -15,6 +15,12 @@ module.exports = {
   },
   plugins: ['vue'],
   rules: {
-    semi: 'off'
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    semi: 'off',
+    'comma-dangle': 'off',
+    'no-plusplus': 'off',
+    'no-param-reassign': 'off',
+    'implicit-arrow-linebreak': 'off'
   }
 }
