@@ -14,7 +14,7 @@ See [docs](https://github.com/) for more information.
    ```sh
    npm login
    ```
-2. Create and copy npm auth token
+2. [Create](https://docs.npmjs.com/creating-and-viewing-access-tokens) and copy npm access token
    ```sh
    npm token create
    ```
