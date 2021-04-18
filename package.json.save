@@ -1,0 +1,15 @@
+{
+  "name": "@nujek/storyblok-schedule",
+  "main": "dist/your-component-name.ssr.js",
+  "module": "dist/your-component-name.esm.js",
+  "unpkg": "dist/your-component-name.min.js",
+  "style": "dist/your-component-name.css",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
