@@ -1,5 +1,5 @@
 {
-  "name": "@kshevitskiy/storyblok-schedule",
+  "name": "storyblok-schedule",
   "version": "1.0.4",
   "description": "",
   "main": "dist/storyblok-schedule.ssr.js",
