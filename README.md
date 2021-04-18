@@ -1,6 +1,6 @@
 # @macherjek/storyblok-schedule
 
-[![npm version](https://img.shields.io/npm/v/@macherjek/storyblok-schedule)](https://www.npmjs.com/package/@macherjek/storyblok-schedule)
+[![npm version](https://img.shields.io/npm/v/storyblok-schedule)](https://www.npmjs.com/package/storyblok-schedule)
 
 **Component to display weekly schedule**
 

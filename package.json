@@ -23,7 +23,7 @@
     "test": "jest src/*",
     "watch:test": "npm test -- --watch",
     "lint": "eslint 'src/**/*.{js,vue}'",
-    "release": "npm run lint && npm run test && npm run predev && npm run prebuild && standard-version && git push --follow-tags && npm publish"
+    "release": "npm run lint && npm run test && npm run predev && npm run prebuild && standard-version && git push --follow-tags"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
