@@ -70,5 +70,8 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     }
   },
-  "dependencies": {}
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
 }
