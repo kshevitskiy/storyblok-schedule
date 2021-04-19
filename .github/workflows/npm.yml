@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-
+      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -23,17 +23,17 @@ jobs:
         run: |
           npm test
           npm run build
+      # Publish to npm
       - name: Publish tag to npm
         if: contains(github.ref, 'tags')
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
+      # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v1
         with:
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@kshevitskiy'
-
+      # Publish to GitHub Packages
       - name: Publish tag to GPR
         run: npm publish
         env:
