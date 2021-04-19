@@ -32,6 +32,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           registry-url: 'https://npm.pkg.github.com'
+          scope: '@kshevitskiy'
 
       - name: Publish tag to GPR
         run: npm publish
