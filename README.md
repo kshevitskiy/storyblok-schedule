@@ -1,6 +1,6 @@
 # @macherjek/storyblok-schedule
 
-[![npm version](https://img.shields.io/npm/v/storyblok-schedule)](https://www.npmjs.com/package/storyblok-schedule)
+[![npm version](https://img.shields.io/npm/v/@kshevitskiy/storyblok-schedule)](https://www.npmjs.com/package/@kshevitskiy/storyblok-schedule)
 
 **Component to display weekly schedule**
 
@@ -21,6 +21,8 @@ See [docs](https://github.com/) for more information.
 3. Go to GitHub repo: Settings > Secrets > New repository secret:
    - name: `NPM_AUTH_TOKEN`
    - value: token
+
+**NOTICE. Package will be published in npm and [GitHub package registry](https://github.com/features/packages)**
 
 ## License
 
