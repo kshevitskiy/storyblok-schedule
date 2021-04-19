@@ -12,6 +12,10 @@
     "dist/*",
     "src/**/*.vue"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kshevitskiy/storyblok-schedule.git"
+  },
   "scripts": {
     "prebuild": "rm -rf dist/",
     "build": "NODE_ENV=production rollup --c rollup.config.js",
