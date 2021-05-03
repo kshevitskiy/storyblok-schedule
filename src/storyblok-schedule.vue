@@ -46,71 +46,6 @@ import {
   sequentialDays
 } from './helpers'
 
-// const dataPlaceholder = [
-//   {
-//     name: 'Monday',
-//     times: [
-//       {
-//         end: '12:00',
-//         start: '09:00'
-//       }
-//     ]
-//   },
-//   {
-//     name: 'Tuesday',
-//     times: [
-//       {
-//         end: '12:00',
-//         start: '09:00'
-//       }
-//     ]
-//   },
-//   {
-//     name: 'Wednesday',
-//     times: [
-//       {
-//         end: '18:00',
-//         start: '09:00'
-//       }
-//     ]
-//   },
-//   {
-//     name: 'Thursday',
-//     times: []
-//   },
-//   {
-//     name: 'Friday',
-//     times: [
-//       {
-//         end: '18:00',
-//         start: '09:00'
-//       }
-//     ]
-//   },
-//   {
-//     name: 'Saturday',
-//     times: [
-//       {
-//         end: '18:00',
-//         start: '09:00'
-//       }
-//     ]
-//   },
-//   {
-//     name: 'Sunday',
-//     times: [
-//       {
-//         end: '12:00',
-//         start: '09:00'
-//       },
-//       {
-//         end: '18:00',
-//         start: '14:00'
-//       }
-//     ]
-//   }
-// ]
-
 const dataPlaceholder = [
   {
     name: 'Monday',
@@ -319,12 +254,10 @@ export default {
       })
     },
     pairByTimerange(days) {
-      const daysAndTimes = days.map((item) => {
-        return {
-          ...item,
-          times: item.times ? item.times.join(', ') : this.placeholder
-        }
-      })
+      const daysAndTimes = days.map((item) => ({
+        ...item,
+        times: item.times ? item.times.join(', ') : this.placeholder
+      }))
 
       const key = 'times'
       const index = 'index'
@@ -338,7 +271,11 @@ export default {
         if (hasSlot) {
           // Find group which includes day
           const matchedSlot = findTimeSlot(result, day, key, index)
-          matchedSlot ? matchedSlot.push(day) : result.push([day])
+          if (matchedSlot) {
+            matchedSlot.push(day)
+          } else {
+            result.push([day])
+          }
         }
 
         if (!hasSlot) {
