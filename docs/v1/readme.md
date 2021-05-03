@@ -48,10 +48,16 @@ Vue.use(StoryblokSchedule)
 <storyblok-schedule locale="ru-RU" weekday="long"></storyblok-schedule>
 :::
 
-### Pairing
+### Pair by groups
 
 ::: demo
-<storyblok-schedule :pairing="true"></storyblok-schedule>
+<storyblok-schedule pairing="groups"></storyblok-schedule>
+:::
+
+### Pair by timerange
+
+::: demo
+<storyblok-schedule pairing="timerange" locale="uk-UA"></storyblok-schedule>
 :::
 
 ### Show empty day
@@ -76,41 +82,41 @@ Vue.use(StoryblokSchedule)
 
 ## API
 
-### storyblok-schedule 
+### storyblok-schedule
 
-#### slots 
+#### slots
 
-- `day` day slot 
+- `day` day slot
 
-- `time` time slot 
+- `time` time slot
 
-#### props 
+#### props
 
-- `days` ***Array*** (*optional*) `default: [object Object]` 
+- `days` **_Array_** (_optional_) `default: [object Object]`
 
-  Array of Objects. See macherjek-opening-hours storyblok plugin [docs](https://www.notion.so/OpeningHours-Component-41cadbfd790749c29dbe535af1097de0) 
+  Array of Objects. See macherjek-opening-hours storyblok plugin [docs](https://www.notion.so/OpeningHours-Component-41cadbfd790749c29dbe535af1097de0)
 
-- `locale` ***String*** (*optional*) `default: 'de-DE'` 
+- `locale` **_String_** (_optional_) `default: 'de-DE'`
 
-  Name of locale, eg. en-GB, default de-DE 
+  Name of locale, eg. en-GB, default de-DE
 
-- `weekday` ***String*** (*optional*) `default: 'short'` 
+- `weekday` **_String_** (_optional_) `default: 'short'`
 
-  Formart of weekday short/long 
+  Formart of weekday short/long
 
-- `pairing` ***Boolean*** (*optional*) `default: false` 
+- `pairing` **_Boolean_** (_optional_) `default: false`
 
   Mon-Wed: 9:00-18:00, Thu-Sat: 9:00-18:00
-  or Mon-Sat: 9:00-18:00 (Sunday is closed) 
+  or Mon-Sat: 9:00-18:00 (Sunday is closed)
 
-- `show-empty-day` ***Boolean*** (*optional*) `default: false` 
+- `show-empty-day` **_Boolean_** (_optional_) `default: false`
 
-  Sun: — (use `placeholder` property to change time placeholder value) 
+  Sun: — (use `placeholder` property to change time placeholder value)
 
-- `placeholder` ***String*** (*optional*) `default: '—'` 
+- `placeholder` **_String_** (_optional_) `default: '—'`
 
-- `show-current-day` ***Boolean*** (*optional*) `default: false` 
+- `show-current-day` **_Boolean_** (_optional_) `default: false`
 
-  Wed: 9:00-18:00 
+  Wed: 9:00-18:00
 
-- `disabled` ***Boolean*** (*optional*) `default: false` 
+- `disabled` **_Boolean_** (_optional_) `default: false`

@@ -1,5 +1,14 @@
 <template>
-  <ul v-if="!disabled" class="schedule">
+  <div v-if="disabled" class="schedule">
+    <!-- disabled slot -->
+    <slot name="disabled">
+      Schedule is disabled
+    </slot>
+  </div>
+  <ul v-else class="schedule">
+    <!-- <pre>
+      {{ formattedDays }}
+    </pre> -->
     <li v-for="(day, index) in formattedDays" :key="index">
       <!-- day slot -->
       <slot name="day" v-bind="{ name: day.name }">
@@ -37,6 +46,71 @@ import {
   sequentialDays
 } from './helpers'
 
+// const dataPlaceholder = [
+//   {
+//     name: 'Monday',
+//     times: [
+//       {
+//         end: '12:00',
+//         start: '09:00'
+//       }
+//     ]
+//   },
+//   {
+//     name: 'Tuesday',
+//     times: [
+//       {
+//         end: '12:00',
+//         start: '09:00'
+//       }
+//     ]
+//   },
+//   {
+//     name: 'Wednesday',
+//     times: [
+//       {
+//         end: '18:00',
+//         start: '09:00'
+//       }
+//     ]
+//   },
+//   {
+//     name: 'Thursday',
+//     times: []
+//   },
+//   {
+//     name: 'Friday',
+//     times: [
+//       {
+//         end: '18:00',
+//         start: '09:00'
+//       }
+//     ]
+//   },
+//   {
+//     name: 'Saturday',
+//     times: [
+//       {
+//         end: '18:00',
+//         start: '09:00'
+//       }
+//     ]
+//   },
+//   {
+//     name: 'Sunday',
+//     times: [
+//       {
+//         end: '12:00',
+//         start: '09:00'
+//       },
+//       {
+//         end: '18:00',
+//         start: '14:00'
+//       }
+//     ]
+//   }
+// ]
+
 const dataPlaceholder = [
   {
     name: 'Monday',
@@ -73,7 +147,7 @@ const dataPlaceholder = [
     name: 'Friday',
     times: [
       {
-        end: '18:00',
+        end: '12:00',
         start: '09:00'
       }
     ]
@@ -82,7 +156,7 @@ const dataPlaceholder = [
     name: 'Saturday',
     times: [
       {
-        end: '18:00',
+        end: '12:00',
         start: '09:00'
       }
     ]
@@ -93,14 +167,22 @@ const dataPlaceholder = [
       {
         end: '12:00',
         start: '09:00'
-      },
-      {
-        end: '18:00',
-        start: '14:00'
       }
     ]
   }
 ]
+
+const findTimeSlot = (arr, item, key, index) =>
+  arr.find((group) => {
+    const hasKey = group.some((field) => field[key] === item[key])
+    // Check if current group items are sequent
+    const indexSeqence = group
+      .map((field) => field[index])
+      .concat(item[index])
+      .join('')
+    const isSequent = sequentialDays(indexSeqence)
+    return hasKey && isSequent
+  })
 
 export default {
   name: 'StoryblokSchedule',
@@ -134,8 +216,10 @@ export default {
      * or Mon-Sat: 9:00-18:00 (Sunday is closed)
      */
     pairing: {
-      type: Boolean,
-      default: false
+      type: String,
+      validator: (value) =>
+        ['groups', 'timerange', 'weekcycle'].includes(value) || value === null,
+      default: null
     },
     /**
      * Sun: — (use `placeholder` property to change time placeholder value)
@@ -147,6 +231,10 @@ export default {
     placeholder: {
       type: String,
       default: '—'
+    },
+    timeDivider: {
+      type: String,
+      default: ' - '
     },
     /**
      * Wed: 9:00-18:00
@@ -172,14 +260,14 @@ export default {
           name,
           index,
           times: hasTimes
-            ? times.map((time) => `${time.start} — ${time.end}`)
+            ? times.map((time) => time.start + this.timeDivider + time.end)
             : null
         }
       })
 
-      // Hide current day
-      if (!this.showCurrentDay) {
-        days = days.filter((_, index) => index !== today)
+      // Show only current day
+      if (this.showCurrentDay) {
+        days = days.filter((_, index) => index === today)
       }
 
       // Hide empty days
@@ -188,8 +276,12 @@ export default {
       }
 
       // Days pairing
-      if (this.pairing) {
+      if (this.pairing === 'groups') {
         days = this.pairDays(days)
+      }
+
+      if (this.pairing === 'timerange') {
+        days = this.pairByTimerange(days)
       }
 
       return days
@@ -207,9 +299,11 @@ export default {
       const groups = groupByTime(days)
 
       return Object.keys(groups).map((key) => {
+        key = key === 'null' ? null : key
+
         const daySequence = groups[key].map((item) => item.index).join('')
         const dayNames = groups[key].map((item) => item.name)
-        const times = key.split(',')
+        const times = key && key.split(',')
         let name = dayNames
 
         if (sequentialDays(daySequence)) {
@@ -223,6 +317,38 @@ export default {
           times
         }
       })
+    },
+    pairByTimerange(days) {
+      const daysAndTimes = days.map((item) => {
+        return {
+          ...item,
+          times: item.times ? item.times.join(', ') : this.placeholder
+        }
+      })
+
+      const key = 'times'
+      const index = 'index'
+
+      const groups = daysAndTimes.reduce((result, day) => {
+        // Check if array with day is already exists
+        const hasSlot = result.some((group) =>
+          group.some((item) => item[key] === day[key])
+        )
+
+        if (hasSlot) {
+          // Find group which includes day
+          const matchedSlot = findTimeSlot(result, day, key, index)
+          matchedSlot ? matchedSlot.push(day) : result.push([day])
+        }
+
+        if (!hasSlot) {
+          result.push([day])
+        }
+
+        return result
+      }, [])
+
+      return groups.map((group) => this.pairDays(group)).flat()
     }
   }
 }
