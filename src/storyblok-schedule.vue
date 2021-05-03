@@ -254,10 +254,11 @@ export default {
       })
     },
     pairByTimerange(days) {
-      const daysAndTimes = days.map((item) => ({
-        ...item,
-        times: item.times ? item.times.join(', ') : this.placeholder
-      }))
+      const daysAndTimes = days.map((item) => {
+        return Object.assign(item, {
+          times: item.times ? item.times.join(', ') : this.placeholder
+        })
+      })
 
       const key = 'times'
       const index = 'index'

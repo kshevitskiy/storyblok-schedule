@@ -82,41 +82,45 @@ Vue.use(StoryblokSchedule)
 
 ## API
 
-### storyblok-schedule
+### storyblok-schedule 
 
-#### slots
+#### slots 
 
-- `day` day slot
+- `disabled` disabled slot 
 
-- `time` time slot
+- `day` day slot 
 
-#### props
+- `time` time slot 
 
-- `days` **_Array_** (_optional_) `default: [object Object]`
+#### props 
 
-  Array of Objects. See macherjek-opening-hours storyblok plugin [docs](https://www.notion.so/OpeningHours-Component-41cadbfd790749c29dbe535af1097de0)
+- `days` ***Array*** (*optional*) `default: [object Object]` 
 
-- `locale` **_String_** (_optional_) `default: 'de-DE'`
+  Array of Objects. See macherjek-opening-hours storyblok plugin [docs](https://www.notion.so/OpeningHours-Component-41cadbfd790749c29dbe535af1097de0) 
 
-  Name of locale, eg. en-GB, default de-DE
+- `locale` ***String*** (*optional*) `default: 'de-DE'` 
 
-- `weekday` **_String_** (_optional_) `default: 'short'`
+  Name of locale, eg. en-GB, default de-DE 
 
-  Formart of weekday short/long
+- `weekday` ***String*** (*optional*) `default: 'short'` 
 
-- `pairing` **_Boolean_** (_optional_) `default: false`
+  Formart of weekday short/long 
+
+- `pairing` ***String*** (*optional*) `default: null` 
 
   Mon-Wed: 9:00-18:00, Thu-Sat: 9:00-18:00
-  or Mon-Sat: 9:00-18:00 (Sunday is closed)
+  or Mon-Sat: 9:00-18:00 (Sunday is closed) 
 
-- `show-empty-day` **_Boolean_** (_optional_) `default: false`
+- `show-empty-day` ***Boolean*** (*optional*) `default: false` 
 
-  Sun: — (use `placeholder` property to change time placeholder value)
+  Sun: — (use `placeholder` property to change time placeholder value) 
 
-- `placeholder` **_String_** (_optional_) `default: '—'`
+- `placeholder` ***String*** (*optional*) `default: '—'` 
 
-- `show-current-day` **_Boolean_** (_optional_) `default: false`
+- `time-divider` ***String*** (*optional*) `default: ' - '` 
 
-  Wed: 9:00-18:00
+- `show-current-day` ***Boolean*** (*optional*) `default: false` 
 
-- `disabled` **_Boolean_** (_optional_) `default: false`
+  Wed: 9:00-18:00 
+
+- `disabled` ***Boolean*** (*optional*) `default: false` 

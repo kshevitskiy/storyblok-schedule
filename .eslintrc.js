@@ -22,6 +22,7 @@ module.exports = {
     'no-plusplus': 'off',
     'no-param-reassign': 'off',
     'implicit-arrow-linebreak': 'off',
-    'function-paren-newline': 'off'
+    'function-paren-newline': 'off',
+    'arrow-body-style': 0
   }
 }
