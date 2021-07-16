@@ -96,7 +96,17 @@ Vue.use(StoryblokSchedule)
 
 - `days` ***Array*** (*optional*) `default: [object Object]` 
 
+  Source type.
   Array of Objects. See macherjek-opening-hours storyblok plugin [docs](https://www.notion.so/OpeningHours-Component-41cadbfd790749c29dbe535af1097de0) 
+
+- `text` ***String*** (*optional*) `default: ''` 
+
+  Source type.
+  Custom text 
+
+- `source` ***String*** (*optional*) `default: 'days'` 
+
+  Data source types 
 
 - `locale` ***String*** (*optional*) `default: 'de-DE'` 
 
