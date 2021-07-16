@@ -5,36 +5,43 @@
       Schedule is disabled
     </slot>
   </div>
-  <ul v-else class="schedule">
-    <!-- <pre>
-      {{ formattedDays }}
-    </pre> -->
-    <li v-for="(day, index) in formattedDays" :key="index">
-      <!-- day slot -->
-      <slot name="day" v-bind="{ name: day.name }">
-        <strong>
-          <template v-if="pairing">
-            {{
-              day.name.length === 2 ? day.name.join('-') : day.name.join(', ')
-            }}:
-          </template>
-          <template v-else>{{ day.name }}: </template>
-        </strong>
-      </slot>
 
-      <template v-if="day.times || showEmptyDay">
-        <!-- time slot -->
-        <slot name="time" v-bind="{ time: day.times, placeholder }">
-          <span v-if="day.times">
-            {{ day.times.join(', ') }}
-          </span>
-          <span v-else>
-            {{ placeholder }}
-          </span>
+  <div v-else class="schedule">
+    <template v-if="source === 'text'">
+      {{ text }}
+    </template>
+
+    <ul v-if="source === 'days'" class="calendar">
+      <!-- <pre>
+        {{ formattedDays }}
+      </pre> -->
+      <li v-for="(day, index) in formattedDays" :key="index">
+        <!-- day slot -->
+        <slot name="day" v-bind="{ name: day.name }">
+          <strong>
+            <template v-if="pairing">
+              {{
+                day.name.length === 2 ? day.name.join('-') : day.name.join(', ')
+              }}:
+            </template>
+            <template v-else>{{ day.name }}: </template>
+          </strong>
         </slot>
-      </template>
-    </li>
-  </ul>
+
+        <template v-if="day.times || showEmptyDay">
+          <!-- time slot -->
+          <slot name="time" v-bind="{ time: day.times, placeholder }">
+            <span v-if="day.times">
+              {{ day.times.join(', ') }}
+            </span>
+            <span v-else>
+              {{ placeholder }}
+            </span>
+          </slot>
+        </template>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -123,6 +130,7 @@ export default {
   name: 'StoryblokSchedule',
   props: {
     /**
+     * Source type.
      * Array of Objects. See macherjek-opening-hours storyblok plugin [docs](https://www.notion.so/OpeningHours-Component-41cadbfd790749c29dbe535af1097de0)
      */
     days: {
@@ -130,6 +138,22 @@ export default {
       // required: true,
       validator: daysValidator,
       default: () => dataPlaceholder
+    },
+    /**
+     * Source type.
+     * Custom text
+     */
+    text: {
+      type: String,
+      default: ''
+    },
+    /**
+     * Data source types
+     */
+    source: {
+      type: String,
+      validator: (value) => ['days', 'text'].includes(value),
+      default: 'days'
     },
     /**
      * Name of locale, eg. en-GB, default de-DE
