@@ -30,7 +30,7 @@
         <template v-if="day.times || showEmptyDay">
           <!-- time slot -->
           <slot name="time" v-bind="{ time: day.times, placeholder }">
-            <span v-if="day.times">
+            <span v-if="day.times" class="time">
               <template v-if="Array.isArray(day.times)">
                 {{ day.times.join(', ') }}
               </template>
@@ -38,7 +38,7 @@
                 {{ day.times }}
               </template>
             </span>
-            <span v-else>
+            <span v-else class="time">
               {{ placeholder }}
             </span>
           </slot>

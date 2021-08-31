@@ -6,17 +6,17 @@ test('Renders', () => {
   expect(wrapper.exists()).toBe(true)
 })
 
-test('Shows placeholders', () => {
-  const dayHtmlPlaceholder = '<div class="day"></div>'
-  const timeHtmlPlaceholder = '<div class="time"></div>'
+// test('Shows placeholders', () => {
+//   const dayHtmlPlaceholder = '<div class="day"></div>'
+//   const timeHtmlPlaceholder = '<div class="time"></div>'
 
-  const wrapper = shallowMount(StoryblokSchedule, {
-    slots: {
-      day: dayHtmlPlaceholder,
-      time: timeHtmlPlaceholder
-    }
-  })
+//   const wrapper = shallowMount(StoryblokSchedule, {
+//     slots: {
+//       day: dayHtmlPlaceholder,
+//       time: timeHtmlPlaceholder
+//     }
+//   })
 
-  expect(wrapper.html()).toContain(dayHtmlPlaceholder)
-  expect(wrapper.html()).toContain(timeHtmlPlaceholder)
-})
+//   expect(wrapper.html()).toContain(dayHtmlPlaceholder)
+//   expect(wrapper.html()).toContain(timeHtmlPlaceholder)
+// })
