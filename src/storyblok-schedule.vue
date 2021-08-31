@@ -11,17 +11,16 @@
       {{ text }}
     </template>
 
-    <ul v-if="source === 'days'" class="calendar">
-      <!-- <pre>
-        {{ formattedDays }}
-      </pre> -->
+    <ul v-if="['daysAndText', 'days'].includes(source)" class="calendar">
       <li v-for="(day, index) in formattedDays" :key="index">
         <!-- day slot -->
         <slot name="day" v-bind="{ name: day.name }">
           <strong>
             <template v-if="pairing">
               {{
-                day.name.length === 2 ? day.name.join('-') : day.name.join(', ')
+                day.name.length === 2
+                  ? day.name.join('-')
+                  : day.name.join(', ')
               }}:
             </template>
             <template v-else>{{ day.name }}: </template>
@@ -32,7 +31,12 @@
           <!-- time slot -->
           <slot name="time" v-bind="{ time: day.times, placeholder }">
             <span v-if="day.times">
-              {{ day.times.join(', ') }}
+              <template v-if="Array.isArray(day.times)">
+                {{ day.times.join(', ') }}
+              </template>
+              <template v-else>
+                {{ day.times }}
+              </template>
             </span>
             <span v-else>
               {{ placeholder }}
@@ -52,67 +56,7 @@ import {
   daysValidator,
   sequentialDays
 } from './helpers'
-
-const dataPlaceholder = [
-  {
-    name: 'Monday',
-    times: [
-      {
-        end: '12:00',
-        start: '09:00'
-      }
-    ]
-  },
-  {
-    name: 'Tuesday',
-    times: [
-      {
-        end: '12:00',
-        start: '09:00'
-      }
-    ]
-  },
-  {
-    name: 'Wednesday',
-    times: [
-      {
-        end: '18:00',
-        start: '09:00'
-      }
-    ]
-  },
-  {
-    name: 'Thursday',
-    times: []
-  },
-  {
-    name: 'Friday',
-    times: [
-      {
-        end: '12:00',
-        start: '09:00'
-      }
-    ]
-  },
-  {
-    name: 'Saturday',
-    times: [
-      {
-        end: '12:00',
-        start: '09:00'
-      }
-    ]
-  },
-  {
-    name: 'Sunday',
-    times: [
-      {
-        end: '12:00',
-        start: '09:00'
-      }
-    ]
-  }
-]
+import seeder from './data.json'
 
 const findTimeSlot = (arr, item, key, index) =>
   arr.find((group) => {
@@ -137,7 +81,7 @@ export default {
       type: Array,
       // required: true,
       validator: daysValidator,
-      default: () => dataPlaceholder
+      default: () => seeder.default
     },
     /**
      * Source type.
@@ -152,7 +96,7 @@ export default {
      */
     source: {
       type: String,
-      validator: (value) => ['days', 'text'].includes(value),
+      validator: (value) => ['days', 'text', 'daysAndText'].includes(value),
       default: 'days'
     },
     /**
@@ -212,15 +156,17 @@ export default {
       // Map day names with defined locale
       let days = this.days.map((day, index) => {
         const name = this.getDayName(index) || day.name
-        const { times } = day
-        const hasTimes = times && times.length > 0
+        let data = day[day.source]
+        const hasData = data && data.length > 0
+
+        if (Array.isArray(data)) {
+          data = data.map((time) => time.start + this.timeDivider + time.end)
+        }
 
         return {
           name,
           index,
-          times: hasTimes
-            ? times.map((time) => time.start + this.timeDivider + time.end)
-            : null
+          times: hasData ? data : null
         }
       })
 
@@ -279,8 +225,14 @@ export default {
     },
     pairByTimerange(days) {
       const daysAndTimes = days.map((item) => {
+        let { times } = item
+
+        if (Array.isArray(times) && times.length) {
+          times = times.join(', ')
+        }
+
         return Object.assign(item, {
-          times: item.times ? item.times.join(', ') : this.placeholder
+          times: times || this.placeholder
         })
       })
 
