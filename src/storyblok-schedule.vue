@@ -56,7 +56,7 @@ import {
   daysValidator,
   sequentialDays
 } from './helpers'
-import seeder from './data.json'
+import seeder from './seeder'
 
 const findTimeSlot = (arr, item, key, index) =>
   arr.find((group) => {
