@@ -1,5 +1,5 @@
 export default {
-  default: [
+  base: [
     {
       name: 'Monday',
       times: [

@@ -54,7 +54,8 @@ import {
   groupBy,
   today,
   daysValidator,
-  sequentialDays
+  sequentialDays,
+  toAmPmTime
 } from './helpers'
 import seeder from './seeder'
 
@@ -70,6 +71,14 @@ const findTimeSlot = (arr, item, key, index) =>
     return hasKey && isSequent
   })
 
+const toAmPm = (time, locale) => {
+  time.start = toAmPmTime(time.start, locale)
+  time.end = toAmPmTime(time.end, locale)
+  return time
+}
+
+const SEEDING_DATA = seeder.days
+
 export default {
   name: 'StoryblokSchedule',
   props: {
@@ -81,7 +90,7 @@ export default {
       type: Array,
       // required: true,
       validator: daysValidator,
-      default: () => seeder.default
+      default: () => SEEDING_DATA
     },
     /**
      * Source type.
@@ -149,6 +158,13 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Time format 12 (AM, PM) or 24-hour
+     */
+    amPm: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -159,7 +175,11 @@ export default {
         let data = day[day.source]
         const hasData = data && data.length > 0
 
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && hasData) {
+          if (this.amPm) {
+            data = data.map((time) => toAmPm(time, this.locale))
+          }
+
           data = data.map((time) => time.start + this.timeDivider + time.end)
         }
 
@@ -185,6 +205,7 @@ export default {
         days = this.pairDays(days)
       }
 
+      // Timerange pairing
       if (this.pairing === 'timerange') {
         days = this.pairByTimerange(days)
       }
@@ -228,6 +249,10 @@ export default {
         let { times } = item
 
         if (Array.isArray(times) && times.length) {
+          if (this.amPm) {
+            times = times.map((time) => toAmPm(time, this.locale))
+          }
+
           times = times.join(', ')
         }
 

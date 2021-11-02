@@ -1,4 +1,5 @@
 const TODAY = new Date()
+const TIME_REGEX = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
 
 /**
  * Returns list of localized days
@@ -67,4 +68,27 @@ export const daysValidator = (value) => {
   }
 
   return true
+}
+
+/**
+ * Convert 24hr time string into 12 hrs time format
+ * @param {string} timeString
+ * @param {string} locale
+ */
+export const toAmPmTime = (timeString, locale = 'en-US') => {
+  const isTime = TIME_REGEX.test(timeString)
+
+  if (isTime) {
+    const dateTime = `1970-01-01T${timeString}Z`
+    const date = new Date(dateTime)
+    const settings = {
+      timeZone: 'UTC',
+      hour12: true,
+      hour: 'numeric',
+      minute: 'numeric'
+    }
+    return date.toLocaleTimeString(locale, settings)
+  }
+
+  return timeString
 }
