@@ -1,6 +1,6 @@
 {
   "name": "@kshevitskiy/storyblok-schedule",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "",
   "main": "dist/storyblok-schedule.ssr.js",
   "module": "dist/storyblok-schedule.esm.js",
