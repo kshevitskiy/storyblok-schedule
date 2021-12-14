@@ -42,10 +42,10 @@
               {{ placeholder }}
             </span>
           </slot>
-
-          <!-- Trailing text placeholder is used to display custom text after time -->
-          <slot name="trailing-text" v-bind="{ time: day.times }" />
         </template>
+
+        <!-- Trailing text placeholder is used to display custom text after time -->
+        <slot name="trailing-text" v-bind="{ day, time: day.times }" />
       </li>
     </ul>
   </div>
