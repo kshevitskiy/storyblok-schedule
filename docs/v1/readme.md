@@ -81,7 +81,7 @@ Vue.use(StoryblokSchedule)
 ### Time format
 
 ::: demo
-<storyblok-schedule pairing="groups" am-pm></storyblok-schedule>
+<storyblok-schedule pairing="groups"></storyblok-schedule>
 :::
 
 <!-- The API section is auto generated, don't touch please -->
